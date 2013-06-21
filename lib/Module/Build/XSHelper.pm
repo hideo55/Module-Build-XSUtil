@@ -12,8 +12,8 @@ sub import {
     my ($class, %args) = @_;
     %args = ( cc_warnings => 1, %args);
     require Module::Build;    
-    my $orig = Module::Build->can('ACTION_build');
-    if ($orig) {
+    my $orig_build = Module::Build->can('ACTION_build');
+    {
         no strict 'refs';
         no warnings 'redefine', 'once';
         *Module::Build::ACTION_build = sub {
@@ -86,8 +86,8 @@ sub import {
                 require Devel::XSHelper;
                 Devel::XSHelper::WriteFile($xshelper);
                 $builder->add_to_cleanup($xshelper);
-                my $safe = quotemeta($xshelper);
-                $builder->_append_maniskip("^$safe\$");
+                #my $safe = quotemeta($xshelper);
+                #$builder->_append_maniskip("^$safe\$");
                 # generate ppport.h to same directory automatically.
                 unless ( defined $args{ppport} ) {
                     ( my $ppport = $xshelper ) =~ s!xshelper\.h$!ppport\.h!;
@@ -103,13 +103,13 @@ sub import {
                 require Devel::PPPort;
                 Devel::PPPort::WriteFile($ppport);
                 $builder->add_to_cleanup($ppport);
-                my $safe = quotemeta($ppport);
-                $builder->_append_maniskip("^$safe\$");
+                #my $safe = quotemeta($ppport);
+                #$builder->_append_maniskip("^$safe\$");
             }
             if ( $args{cc_warnings} ) {
                 $class->_add_extra_compiler_flags( $builder, $class->_cc_warnings( \%args ) );
             }
-            $orig->(@_);
+            $orig_buuild->(@_);
         };
     }
 }
