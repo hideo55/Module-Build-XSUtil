@@ -13,14 +13,7 @@ our $VERSION = "0.01";
 sub import {
     my ($class, %args) = @_;
     
-    require Module::Build;
-    
-    my $caller = caller;
-    if( !$caller->isa('Module::Build') ){
-        no strict 'refs';
-        push @{"${caller}::ISA"}, 'Module::Build';
-    }
-    
+    require Module::Build;    
     my $orig = Module::Build->can('ACTION_build');
     if ($orig) {
         no strict 'refs';
