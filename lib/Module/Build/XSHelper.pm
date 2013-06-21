@@ -4,15 +4,13 @@ use strict;
 use warnings;
 use Config;
 use Carp ();
-use base 'Exporter';
-
-our @EXPORT = qw(setup_xs_helper);
+use parent 'Exporter';
 
 our $VERSION = "0.01";
 
 sub import {
     my ($class, %args) = @_;
-    
+    %args = ( cc_warnings => 1, %args);
     require Module::Build;    
     my $orig = Module::Build->can('ACTION_build');
     if ($orig) {
@@ -87,7 +85,9 @@ sub import {
                 File::Path::mkpath( File::Basename::dirname($xshelper) );
                 require Devel::XSHelper;
                 Devel::XSHelper::WriteFile($xshelper);
-
+                $builder->add_to_cleanup($xshelper);
+                my $safe = quotemeta($xshelper);
+                $builder->_append_maniskip("^$safe\$");
                 # generate ppport.h to same directory automatically.
                 unless ( defined $args{ppport} ) {
                     ( my $ppport = $xshelper ) =~ s!xshelper\.h$!ppport\.h!;
@@ -96,13 +96,15 @@ sub import {
             }
 
             if ( my $ppport = $args{ppport} ) {
-                require Devel::PPPort;
                 if ( $ppport eq '1' ) {
-                    Devel::PPPort::WriteFile();
+                    $ppport = 'ppport.h';
                 }
-                else {
-                    Devel::PPPort::WriteFile($ppport);
-                }
+                File::Path::mkpath(File::Basename::dirname($ppport));
+                require Devel::PPPort;
+                Devel::PPPort::WriteFile($ppport);
+                $builder->add_to_cleanup($ppport);
+                my $safe = quotemeta($ppport);
+                $builder->_append_maniskip("^$safe\$");
             }
             if ( $args{cc_warnings} ) {
                 $class->_add_extra_compiler_flags( $builder, $class->_cc_warnings( \%args ) );
