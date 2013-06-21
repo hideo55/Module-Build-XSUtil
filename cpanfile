@@ -8,6 +8,8 @@ requires 'Devel::CheckLib' => 0.04,
 requires 'Devel::CheckCompiler' => 0.02,
 requires 'ExtUtils::CBuilder';
 requires 'Devel::XSHelper';
+requires 'File::Basename';
+requires 'File::Path';
 
 on 'test' => sub {
     requires 'Test::More', '0.98';
