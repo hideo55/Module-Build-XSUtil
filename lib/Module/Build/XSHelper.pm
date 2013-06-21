@@ -169,19 +169,6 @@ sub _cc_warnings {
     return @flags;
 }
 
-sub _add_prereqs {
-    my ( $class, $builder, $type, $module, $version ) = @_;
-    my $p = $builder->{properties};
-    $version = 0 unless defined $version;
-    if ( exists $p->{$type}{$module} ) {
-        return
-            if $builder->compare_versions( $version, '<=', $p->{$type}{$module} );
-    }
-    $builder->log_verbose("Adding to $type\: $module => $version\n");
-    $p->{$type}{$module} = $version;
-    return 1;
-}
-
 sub _add_extra_compiler_flags {
     my ( $class, $builder, @flags ) = @_;
     $builder->extra_compiler_flags( @{ $builder->extra_compiler_flags }, @flags );
