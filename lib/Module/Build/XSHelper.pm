@@ -109,7 +109,7 @@ sub import {
             if ( $args{cc_warnings} ) {
                 $class->_add_extra_compiler_flags( $builder, $class->_cc_warnings( \%args ) );
             }
-            $orig_buuild->(@_);
+            $orig_build->(@_);
         };
     }
 }
