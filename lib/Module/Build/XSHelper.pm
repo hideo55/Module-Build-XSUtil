@@ -4,25 +4,16 @@ use strict;
 use warnings;
 use Config;
 use Carp ();
-use base 'Exporter';
-
-our @EXPORT = qw(setup_xs_helper);
+use parent 'Exporter';
 
 our $VERSION = "0.01";
 
 sub import {
     my ($class, %args) = @_;
-    
-    require Module::Build;
-    
-    my $caller = caller;
-    if( !$caller->isa('Module::Build') ){
-        no strict 'refs';
-        push @{"${caller}::ISA"}, 'Module::Build';
-    }
-    
-    my $orig = Module::Build->can('ACTION_build');
-    if ($orig) {
+    %args = ( cc_warnings => 1, %args);
+    require Module::Build;    
+    my $orig_build = Module::Build->can('ACTION_build');
+    {
         no strict 'refs';
         no warnings 'redefine', 'once';
         *Module::Build::ACTION_build = sub {
@@ -94,7 +85,9 @@ sub import {
                 File::Path::mkpath( File::Basename::dirname($xshelper) );
                 require Devel::XSHelper;
                 Devel::XSHelper::WriteFile($xshelper);
-
+                $builder->add_to_cleanup($xshelper);
+                #my $safe = quotemeta($xshelper);
+                #$builder->_append_maniskip("^$safe\$");
                 # generate ppport.h to same directory automatically.
                 unless ( defined $args{ppport} ) {
                     ( my $ppport = $xshelper ) =~ s!xshelper\.h$!ppport\.h!;
@@ -103,18 +96,20 @@ sub import {
             }
 
             if ( my $ppport = $args{ppport} ) {
-                require Devel::PPPort;
                 if ( $ppport eq '1' ) {
-                    Devel::PPPort::WriteFile();
+                    $ppport = 'ppport.h';
                 }
-                else {
-                    Devel::PPPort::WriteFile($ppport);
-                }
+                File::Path::mkpath(File::Basename::dirname($ppport));
+                require Devel::PPPort;
+                Devel::PPPort::WriteFile($ppport);
+                $builder->add_to_cleanup($ppport);
+                #my $safe = quotemeta($ppport);
+                #$builder->_append_maniskip("^$safe\$");
             }
             if ( $args{cc_warnings} ) {
                 $class->_add_extra_compiler_flags( $builder, $class->_cc_warnings( \%args ) );
             }
-            $orig->(@_);
+            $orig_build->(@_);
         };
     }
 }
@@ -174,19 +169,6 @@ sub _cc_warnings {
     }
 
     return @flags;
-}
-
-sub _add_prereqs {
-    my ( $class, $builder, $type, $module, $version ) = @_;
-    my $p = $builder->{properties};
-    $version = 0 unless defined $version;
-    if ( exists $p->{$type}{$module} ) {
-        return
-            if $builder->compare_versions( $version, '<=', $p->{$type}{$module} );
-    }
-    $builder->log_verbose("Adding to $type\: $module => $version\n");
-    $p->{$type}{$module} = $version;
-    return 1;
 }
 
 sub _add_extra_compiler_flags {
