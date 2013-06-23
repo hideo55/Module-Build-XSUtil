@@ -18,6 +18,10 @@ sub new {
 
     my $self = $class->SUPER::new(%args);
 
+    if ( !defined $args{cc_warnings} ) {
+        $args{cc_warnings} = 1;
+    }
+
     unless ( $self->have_c_compiler() ) {
         warn "This distribution requires a C compiler, but it's not available, stopped.\n";
         exit -1;
@@ -70,7 +74,7 @@ sub new {
     if ( $args{cc_warnings} ) {
         $self->_add_extra_compiler_flags( $self->_cc_warnings( \%args ) );
     }
-    
+
     # xshelper.h
     if ( my $xshelper = $args{generate_xshelper_h} ) {
         if ( $xshelper eq '1' ) {    # { xshelper => 1 }
@@ -123,9 +127,9 @@ sub ACTION_manifest_skip {
     my $self = shift;
     $self->SUPER::ACTION_manifest_skip(@_);
     if ( -e 'MANIFEST.SKIP' ) {
-        my $fh = IO::File->new("< MANIFEST.SKIP");
+        my $fh      = IO::File->new("< MANIFEST.SKIP");
         my $content = do { local $/; <$fh> };
-        my $ppport = $self->ppport_h_path;
+        my $ppport  = $self->ppport_h_path;
         if ( $ppport && $content !~ /\Q${ppport}\E/ ) {
 
             my $safe = quotemeta($ppport);
