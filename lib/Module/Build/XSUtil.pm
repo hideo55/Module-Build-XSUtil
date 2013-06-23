@@ -6,7 +6,7 @@ use Config;
 use Module::Build;
 our @ISA = qw(Module::Build);
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 __PACKAGE__->add_property( 'ppport_h_path'   => undef );
 __PACKAGE__->add_property( 'xshelper_h_path' => undef );
