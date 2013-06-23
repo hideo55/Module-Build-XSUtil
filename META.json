@@ -1,7 +1,7 @@
 {
    "abstract" : "A Module::Build class for building XS modules",
    "author" : [
-      "Hideaki Ohno <hide.o.j55 {at} gmail.com>"
+      ":"
    ],
    "dynamic_config" : 0,
    "generated_by" : "Minilla/v0.5.3, CPAN::Meta::Converter version 2.130880",
@@ -29,7 +29,7 @@
          "requires" : {
             "CPAN::Meta" : "0",
             "CPAN::Meta::Prereqs" : "0",
-            "Module::Build" : "0.38"
+            "Module::Build" : "0.4005"
          }
       },
       "develop" : {
@@ -44,7 +44,6 @@
          "requires" : {
             "Devel::CheckCompiler" : "0.02",
             "Devel::PPPort" : "3.19",
-            "Devel::XSHelper" : "0",
             "Exporter" : "0",
             "ExtUtils::CBuilder" : "0",
             "File::Basename" : "0",
@@ -61,17 +60,6 @@
       }
    },
    "release_status" : "unstable",
-   "resources" : {
-      "bugtracker" : {
-         "web" : "https://github.com/hideo55/Module-Build-XSHelper/issues"
-      },
-      "homepage" : "https://github.com/hideo55/Module-Build-XSHelper",
-      "repository" : {
-         "type" : "git",
-         "url" : "git://github.com/hideo55/Module-Build-XSHelper.git",
-         "web" : "https://github.com/hideo55/Module-Build-XSHelper"
-      }
-   },
    "version" : "0.01",
    "x_contributors" : [
       "hideo55 <hide.o.j55@gmail.com>"

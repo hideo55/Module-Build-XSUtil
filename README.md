@@ -72,11 +72,21 @@ This is a list of a new parameters in the Module::Build::new method:
 
 - generate\_xshelper\_h
 
-    Genereate xshelper.h by [Devel::XSHelper](http://search.cpan.org/perldoc?Devel::XSHelper).
+    Genereate xshelper.h which is a helper header file to include EXTERN.h, perl.h, XSUB.h and ppport.h, 
+    and defines some portability stuff which are not supported by ppport.h.
+
+    It is porting from [Module::Install::XSUtil](http://search.cpan.org/perldoc?Module::Install::XSUtil).
 
 - cc\_warnings
+- \-g options
+
+    If invoke Build.PL with '-g' option, It will build with debug options.
 
     Enable compiler warnings flag. It is enable by default. 
+
+# SEE ALOS
+
+[Module::Install::XSUtil](http://search.cpan.org/perldoc?Module::Install::XSUtil)
 
 # LICENSE
  
