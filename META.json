@@ -1,7 +1,7 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "A Module::Build class for building XS modules",
    "author" : [
-      "Hideaki Ohno <>"
+      "Hideaki Ohno <hide.o.j55 {at} gmail.com>"
    ],
    "dynamic_config" : 0,
    "generated_by" : "Minilla/v0.5.3, CPAN::Meta::Converter version 2.130880",
@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : "2"
    },
-   "name" : "Module-Build-XSHelper",
+   "name" : "Module-Build-XSUtil",
    "no_index" : {
       "directory" : [
          "t",
@@ -43,12 +43,12 @@
       "runtime" : {
          "requires" : {
             "Devel::CheckCompiler" : "0.02",
-            "Devel::CheckLib" : "0.04",
             "Devel::PPPort" : "3.19",
             "Devel::XSHelper" : "0",
             "Exporter" : "0",
             "ExtUtils::CBuilder" : "0",
-            "ExtUtils::ParseXS" : "2.21",
+            "File::Basename" : "0",
+            "File::Path" : "0",
             "XSLoader" : "0.02",
             "parent" : "0",
             "perl" : "5.008005"
@@ -61,5 +61,19 @@
       }
    },
    "release_status" : "unstable",
-   "version" : "0.01"
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/hideo55/Module-Build-XSHelper/issues"
+      },
+      "homepage" : "https://github.com/hideo55/Module-Build-XSHelper",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/hideo55/Module-Build-XSHelper.git",
+         "web" : "https://github.com/hideo55/Module-Build-XSHelper"
+      }
+   },
+   "version" : "0.01",
+   "x_contributors" : [
+      "hideo55 <hide.o.j55@gmail.com>"
+   ]
 }

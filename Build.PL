@@ -23,8 +23,8 @@ my %args = (
         'Module::Build' => 0.38,
     },
 
-    name            => 'Module-Build-XSHelper',
-    module_name     => 'Module::Build::XSHelper',
+    name            => 'Module-Build-XSUtil',
+    module_name     => 'Module::Build::XSUtil',
     allow_pureperl => 0,
 
     script_files => [glob('script/*'), glob('bin/*')],
