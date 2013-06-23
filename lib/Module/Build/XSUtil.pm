@@ -8,6 +8,9 @@ our @ISA = qw(Module::Build);
 
 our $VERSION = "0.01";
 
+__PACKAGE__->add_property( 'ppport_h_path'   => undef );
+__PACKAGE__->add_property( 'xshelper_h_path' => undef );
+
 sub new {
     my $invocant = shift;
     my $class    = ref($invocant) || $invocant;
@@ -44,13 +47,15 @@ sub new {
             warn "This environment does not have a C++ compiler(OS unsupported)\n";
             exit 0;
         };
-        if($self->_is_gcc){
+        if ( $self->_is_gcc ) {
             $self->_add_extra_compiler_flags('-xc++');
             $self->_add_extra_linker_flags('-lstdc++');
-            $self->_add_extra_compiler_flags('-D_FILE_OFFSET_BITS=64') if $Config::Config{ccflags} =~ /-D_FILE_OFFSET_BITS=64/;
-            $self->_add_extra_linker_flags('-lgcc_s') if $^O eq 'netbsd' && !grep{/\-lgcc_s/} @{ $self->extra_linker_flags };
+            $self->_add_extra_compiler_flags('-D_FILE_OFFSET_BITS=64')
+                if $Config::Config{ccflags} =~ /-D_FILE_OFFSET_BITS=64/;
+            $self->_add_extra_linker_flags('-lgcc_s')
+                if $^O eq 'netbsd' && !grep {/\-lgcc_s/} @{ $self->extra_linker_flags };
         }
-        if($self->_is_msvc){
+        if ( $self->_is_msvc ) {
             $self->add_extra_compiler_flags('-TP -EHsc');
             $self->_add_extra_linker_flags('msvcprt.lib');
         }
@@ -62,18 +67,18 @@ sub new {
         Devel::CheckCompiler::check_c99_or_exit();
     }
 
-    # write xshelper.h
+    if ( $args{cc_warnings} ) {
+        $self->_add_extra_compiler_flags( $self->_cc_warnings( \%args ) );
+    }
+    
+    # xshelper.h
     if ( my $xshelper = $args{generate_xshelper_h} ) {
         if ( $xshelper eq '1' ) {    # { xshelper => 1 }
             $xshelper = 'xshelper.h';
         }
-        File::Path::mkpath( File::Basename::dirname($xshelper) );
-        require Devel::XSHelper;
-        Devel::XSHelper::WriteFile($xshelper);
+        $self->xshelper_h_path($xshelper);
         $self->add_to_cleanup($xshelper);
 
-        #my $safe = quotemeta($xshelper);
-        #$builder->_append_maniskip("^$safe\$");
         # generate ppport.h to same directory automatically.
         unless ( defined $args{generate_ppport_h} ) {
             ( my $ppport = $xshelper ) =~ s!xshelper\.h$!ppport\.h!;
@@ -81,41 +86,76 @@ sub new {
         }
     }
 
+    # ppport.h
     if ( my $ppport = $args{generate_ppport_h} ) {
         if ( $ppport eq '1' ) {
             $ppport = 'ppport.h';
         }
-        File::Path::mkpath( File::Basename::dirname($ppport) );
-        require Devel::PPPort;
-        Devel::PPPort::WriteFile($ppport);
+        $self->ppport_h_path($ppport);
         $self->add_to_cleanup($ppport);
+    }
 
-        #my $safe = quotemeta($ppport);
-        #$builder->_append_maniskip("^$safe\$");
-    }
-    if ( $args{cc_warnings} ) {
-        $self->_add_extra_compiler_flags( $self->_cc_warnings( \%args ) );
-    }
-    
     return $self;
 }
 
-sub auto_require {
-  my ($self) = @_;
-  my $p = $self->{properties};
- 
-  if ($self->dist_name ne 'Module-Build-XSUtil'
-      and $self->auto_configure_requires)
-  {
-    if (not exists $p->{configure_requires}{'Module::Build::XSUtil'}) {
-      (my $ver = $VERSION) =~ s/^(\d+\.\d\d).*$/$1/; # last major release only
-      $self->_add_prereq('configure_requires', 'Module::Build::XSUtil', $ver);
+sub ACTION_code {
+    my $self = shift;
+
+    # write xshelper.h
+    if ( my $xshelper = $self->xshelper_h_path ) {
+        File::Path::mkpath( File::Basename::dirname($xshelper) );
+        if ( my $fh = IO::File->new("> $xshelper") ) {
+            $fh->print( _xshelper_h() );
+            $fh->close;
+        }
     }
-  }
- 
-  $self->SUPER::auto_require();
- 
-  return;
+
+    # write ppport.h
+    if ( my $ppport = $self->ppport_h_path ) {
+        File::Path::mkpath( File::Basename::dirname($ppport) );
+        require Devel::PPPort;
+        Devel::PPPort::WriteFile($ppport);
+    }
+    $self->SUPER::ACTION_code(@_);
+}
+
+sub ACTION_manifest_skip {
+    my $self = shift;
+    $self->SUPER::ACTION_manifest_skip(@_);
+    if ( -e 'MANIFEST.SKIP' ) {
+        my $fh = IO::File->new("< MANIFEST.SKIP");
+        my $content = do { local $/; <$fh> };
+        my $ppport = $self->ppport_h_path;
+        if ( $ppport && $content !~ /\Q${ppport}\E/ ) {
+
+            my $safe = quotemeta($ppport);
+            $self->_append_maniskip("^$safe\$");
+        }
+
+        my $xshelper = $self->xshelper_h_path;
+        if ( $xshelper && $content !~ /\Q${xshelper}\E/ ) {
+            my $safe = quotemeta($xshelper);
+            $self->_append_maniskip("^$safe\$");
+        }
+    }
+}
+
+sub auto_require {
+    my ($self) = @_;
+    my $p = $self->{properties};
+
+    if (    $self->dist_name ne 'Module-Build-XSUtil'
+        and $self->auto_configure_requires )
+    {
+        if ( not exists $p->{configure_requires}{'Module::Build::XSUtil'} ) {
+            ( my $ver = $VERSION ) =~ s/^(\d+\.\d\d).*$/$1/;    # last major release only
+            $self->_add_prereq( 'configure_requires', 'Module::Build::XSUtil', $ver );
+        }
+    }
+
+    $self->SUPER::auto_require();
+
+    return;
 }
 
 sub _xs_debugging {
