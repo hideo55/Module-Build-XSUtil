@@ -60,6 +60,17 @@
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/hideo55/Module-Build-XSUtil/issues"
+      },
+      "homepage" : "https://github.com/hideo55/Module-Build-XSUtil",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/hideo55/Module-Build-XSUtil.git",
+         "web" : "https://github.com/hideo55/Module-Build-XSUtil"
+      }
+   },
    "version" : "0.01",
    "x_contributors" : [
       "hideo55 <hide.o.j55@gmail.com>"

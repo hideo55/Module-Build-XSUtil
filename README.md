@@ -78,11 +78,12 @@ This is a list of a new parameters in the Module::Build::new method:
     It is porting from [Module::Install::XSUtil](http://search.cpan.org/perldoc?Module::Install::XSUtil).
 
 - cc\_warnings
+
+    Enable compiler warnings flag. It is enable by default. 
+
 - \-g options
 
     If invoke Build.PL with '-g' option, It will build with debug options.
-
-    Enable compiler warnings flag. It is enable by default. 
 
 # SEE ALOS
 

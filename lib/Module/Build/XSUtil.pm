@@ -374,11 +374,11 @@ It is porting from L<Module::Install::XSUtil>.
 
 =item cc_warnings
 
+Enable compiler warnings flag. It is enable by default. 
+
 =item -g options
 
 If invoke Build.PL with '-g' option, It will build with debug options.
-
-Enable compiler warnings flag. It is enable by default. 
 
 =back
 
