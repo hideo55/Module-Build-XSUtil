@@ -6,7 +6,7 @@ use Config;
 use Module::Build;
 our @ISA = qw(Module::Build);
 
-our $VERSION = "0.03";
+our $VERSION = "0.04";
 
 __PACKAGE__->add_property( 'ppport_h_path'   => undef );
 __PACKAGE__->add_property( 'xshelper_h_path' => undef );
@@ -147,7 +147,6 @@ sub ACTION_manifest_skip {
 sub auto_require {
     my ($self) = @_;
     my $p = $self->{properties};
-
     if (    $self->dist_name ne 'Module-Build-XSUtil'
         and $self->auto_configure_requires )
     {

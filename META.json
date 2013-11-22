@@ -4,7 +4,7 @@
       ":"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v0.5.3, CPAN::Meta::Converter version 2.130880",
+   "generated_by" : "Minilla/v0.6.8, CPAN::Meta::Converter version 2.130880",
    "license" : [
       "perl_5"
    ],
@@ -71,8 +71,8 @@
          "web" : "https://github.com/hideo55/Module-Build-XSUtil"
       }
    },
-   "version" : "0.03",
+   "version" : "0.04",
    "x_contributors" : [
-      "Hideaki Ohno <hide.o.j55@gmail.com>"
+      "hideo55 <hide.o.j55@gmail.com>"
    ]
 }

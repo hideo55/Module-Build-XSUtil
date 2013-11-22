@@ -2,6 +2,10 @@ Revision history for Perl extension Module-Build-XSHelper
 
 {{$NEXT}}
 
+0.04 2013-11-22T21:34:55Z
+    - 	Fixed documentation issue
+        (tokuhirom)
+
 0.03 2013-06-25T11:09:35Z
     - Fixed: cc_warnings bug (issue#1)
 
