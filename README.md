@@ -19,7 +19,7 @@ Use in your Build.PL
         dist_author          => 'Your Name <yourname@example.com>',
         dist_version_from    => 'lib/Your/XS/Module',
         generate_ppport_h    => 'lib/Your/XS/ppport.h',
-        generate_xs_helper_h => 'lib/Your/XS/xshelper.h',
+        generate_xshelper_h  => 'lib/Your/XS/xshelper.h',
         needs_compiler_c99   => 1,
     );
     
@@ -39,7 +39,7 @@ Use in custom builder module.
         my $self = $class->SUPER::new(
             %args,
             generate_ppport_h    => 'lib/Your/XS/ppport.h',
-            generate_xs_helper_h => 'lib/Your/XS/xshelper.h',
+            generate_xshelper_h  => 'lib/Your/XS/xshelper.h',
             needs_compiler_c99   => 1,
         );
         return $self;
