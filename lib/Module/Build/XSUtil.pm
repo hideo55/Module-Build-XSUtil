@@ -426,7 +426,7 @@ If invoke Build.PL with '-g' option, It will build with debug options.
 
 =back
 
-=head1 SEE ALOS
+=head1 SEE ALSO
 
 L<Module::Install::XSUtil>
 
