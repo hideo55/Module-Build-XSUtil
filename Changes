@@ -2,8 +2,11 @@ Revision history for Perl extension Module-Build-XSHelper
 
 {{$NEXT}}
 
+0.06 2014-01-12T02:14:32Z
+    - Fixed typo in POD
+
 0.05 2013-11-22T21:37:33Z
-    - 	Fixed documentation issue
+    - Fixed documentation issue
         (tokuhirom)
 
 0.03 2013-06-25T11:09:35Z

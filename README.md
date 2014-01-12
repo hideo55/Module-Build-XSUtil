@@ -12,7 +12,6 @@ Use in your Build.PL
     use warnings;
     use Module::Build::XSUtil;
     
-
     my $builder = Module::Build::XSUtil->new(
         dist_name            => 'Your-XS-Module',
         license              => 'perl',
@@ -23,7 +22,6 @@ Use in your Build.PL
         needs_compiler_c99   => 1,
     );
     
-
     $builder->create_build_script();
 
 Use in custom builder module.
@@ -33,7 +31,6 @@ Use in custom builder module.
     use warnings;
     use base 'Module::Build::XSUtil';
     
-
     sub new {
         my ($class, %args) = @_;
         my $self = $class->SUPER::new(
@@ -45,7 +42,6 @@ Use in custom builder module.
         return $self;
     }
     
-
     1;
 
 
@@ -53,7 +49,7 @@ Use in custom builder module.
 # DESCRIPTION
  
 
-Module::Build::XSUtil is subclass of [Module::Build](http://search.cpan.org/perldoc?Module::Build) for support building XS modules.
+Module::Build::XSUtil is subclass of [Module::Build](https://metacpan.org/pod/Module::Build) for support building XS modules.
 
 This is a list of a new parameters in the Module::Build::new method:
 
@@ -69,14 +65,14 @@ This is a list of a new parameters in the Module::Build::new method:
 
 - generate\_ppport\_h
 
-    Genereate ppport.h by [Devel::PPPort](http://search.cpan.org/perldoc?Devel::PPPort).
+    Genereate ppport.h by [Devel::PPPort](https://metacpan.org/pod/Devel::PPPort).
 
 - generate\_xshelper\_h
 
     Genereate xshelper.h which is a helper header file to include EXTERN.h, perl.h, XSUB.h and ppport.h, 
     and defines some portability stuff which are not supported by ppport.h.
 
-    It is porting from [Module::Install::XSUtil](http://search.cpan.org/perldoc?Module::Install::XSUtil).
+    It is porting from [Module::Install::XSUtil](https://metacpan.org/pod/Module::Install::XSUtil).
 
 - cc\_warnings
 
@@ -86,9 +82,9 @@ This is a list of a new parameters in the Module::Build::new method:
 
     If invoke Build.PL with '-g' option, It will build with debug options.
 
-# SEE ALOS
+# SEE ALSO
 
-[Module::Install::XSUtil](http://search.cpan.org/perldoc?Module::Install::XSUtil)
+[Module::Install::XSUtil](https://metacpan.org/pod/Module::Install::XSUtil)
 
 # LICENSE
  
