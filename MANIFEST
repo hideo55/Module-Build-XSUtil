@@ -1,0 +1,19 @@
+Build.PL
+Changes
+cpanfile
+eg/Foo/Build.PL
+eg/Foo/lib/Foo.pm
+eg/Foo/lib/Foo.xs
+eg/Foo/MANIFEST
+eg/Foo/MANIFEST.SKIP
+eg/Foo/META.json
+eg/Foo/META.yml
+eg/Foo/t/basic.t
+eg/Foo/typemap
+lib/Module/Build/XSUtil.pm
+LICENSE
+MANIFEST			This list of files
+META.json
+README.md
+t/00_compile.t
+t/01_build.t
