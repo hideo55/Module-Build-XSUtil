@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use Config;
 use Module::Build;
+use File::Basename;
+use File::Path;
 our @ISA = qw(Module::Build);
 
 our $VERSION = "0.06";
@@ -108,9 +110,10 @@ sub ACTION_code {
     # write xshelper.h
     if ( my $xshelper = $self->xshelper_h_path ) {
         File::Path::mkpath( File::Basename::dirname($xshelper) );
-        if ( my $fh = IO::File->new("> $xshelper") ) {
-            $fh->print( _xshelper_h() );
-            $fh->close;
+        
+        if ( open(my $fh, '>', $xshelper) ) {
+            print $fh _xshelper_h();
+            close $fh;
         }
     }
 
@@ -127,8 +130,9 @@ sub ACTION_manifest_skip {
     my $self = shift;
     $self->SUPER::ACTION_manifest_skip(@_);
     if ( -e 'MANIFEST.SKIP' ) {
-        my $fh      = IO::File->new("< MANIFEST.SKIP");
+        open(my $fh, '<', 'MANIFEST.SKIP') or die $!;
         my $content = do { local $/; <$fh> };
+        close $fh;
         my $ppport  = $self->ppport_h_path;
         if ( $ppport && $content !~ /\Q${ppport}\E/ ) {
 

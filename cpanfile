@@ -14,5 +14,8 @@ on 'configure' => sub{
 
 on 'test' => sub {
     requires 'Test::More', '0.98';
+    requires 'Cwd';
+    requires 'File::Spec';
+    requires 'IPC::Open3';
 };
 
