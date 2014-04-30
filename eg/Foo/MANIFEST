@@ -2,7 +2,5 @@ Build.PL
 lib/Foo.pm
 lib/Foo.xs
 MANIFEST			This list of files
-META.json
-META.yml
 t/basic.t
 typemap
