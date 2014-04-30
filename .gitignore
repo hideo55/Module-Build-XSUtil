@@ -24,3 +24,6 @@ cover_db/
 MYMETA.*
 
 /Module-Build-XSUtil-*
+
+.project
+.includepath
