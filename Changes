@@ -2,6 +2,9 @@ Revision history for Perl extension Module-Build-XSHelper
 
 {{$NEXT}}
 
+0.09 2014-05-01T01:55:51Z
+    - Remove broken test
+
 0.08 2014-04-30T10:08:48Z
     - Fixed broken test
 
