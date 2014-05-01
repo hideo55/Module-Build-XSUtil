@@ -57,9 +57,11 @@
       },
       "test" : {
          "requires" : {
-            "Cwd" : "0",
-            "File::Spec" : "0",
-            "IPC::Open3" : "0",
+            "Capture::Tiny" : "0",
+            "Cwd::Guard" : "0",
+            "File::Copy::Recursive" : "0",
+            "File::Spec::Functions" : "0",
+            "File::Temp" : "0",
             "Test::More" : "0.98"
          }
       }
