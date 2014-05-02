@@ -14,7 +14,7 @@ my $tmp_dir = tempdir( CLEANUP => 1 );
  
 dircopy($eg_dir, $tmp_dir);
  
-like run_cmd($tmp_dir, @perl, catfile($tmp_dir, 'Build.PL')), qr/Creating new 'Build' script for 'Foo' version '0.01'/;
+like run_cmd($tmp_dir, @perl, catfile($tmp_dir, 'Build.PL')), qr/Creating new 'Build' script for 'Foo' version/;
 run_cmd($tmp_dir, @perl, catfile($tmp_dir, 'Build'));
 like run_cmd($tmp_dir, @perl, catfile($tmp_dir, 'Build test')), qr/Result\:\s*PASS/;
 done_testing;
