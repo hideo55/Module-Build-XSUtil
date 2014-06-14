@@ -26,6 +26,7 @@ sub run_cmd {
     my ($stdout, $stderr, $result) = capture{
         system($cmd);
     };
+    diag $stderr if $result != 0;
     return $stdout;
 }
  
