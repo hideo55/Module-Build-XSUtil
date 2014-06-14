@@ -1,8 +1,6 @@
 # NAME
- 
 
 Module::Build::XSUtil - A Module::Build class for building XS modules
- 
 
 # SYNOPSIS
 
@@ -44,10 +42,7 @@ Use in custom builder module.
     
     1;
 
-
-
 # DESCRIPTION
- 
 
 Module::Build::XSUtil is subclass of [Module::Build](https://metacpan.org/pod/Module::Build) for support building XS modules.
 
@@ -78,7 +73,7 @@ This is a list of a new parameters in the Module::Build::new method:
 
     Enable compiler warnings flag. It is enable by default. 
 
-- \-g options
+- -g options
 
     If invoke Build.PL with '-g' option, It will build with debug options.
 
@@ -87,17 +82,12 @@ This is a list of a new parameters in the Module::Build::new method:
 [Module::Install::XSUtil](https://metacpan.org/pod/Module::Install::XSUtil)
 
 # LICENSE
- 
 
 Copyright (C) Hideaki Ohno.
- 
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
- 
 
 # AUTHOR
- 
 
 Hideaki Ohno <hide.o.j55 {at} gmail.com>
- 
