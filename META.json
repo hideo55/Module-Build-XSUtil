@@ -76,7 +76,7 @@
          "web" : "https://github.com/hideo55/Module-Build-XSUtil"
       }
    },
-   "version" : "0.11_01",
+   "version" : "0.12",
    "x_contributors" : [
       "tokuhirom <tokuhirom@gmail.com>",
       "hideo55 <hide.o.j55@gmail.com>"
