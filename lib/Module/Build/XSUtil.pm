@@ -60,9 +60,13 @@ sub new {
                 if $Config::Config{ccflags} =~ /-D_FILE_OFFSET_BITS=64/;
             $self->_add_extra_linker_flags('-lgcc_s')
                 if $^O eq 'netbsd' && !grep {/\-lgcc_s/} @{ $self->extra_linker_flags };
-            my $cpp_ver = $args{needs_compiler_cpp};
-            if( $cpp_ver == 11){
+            if ( $args{needs_compiler_cpp} == 11 && $self->_enable_cpp11 ) {
+
+                # Use C++11
                 $self->_add_extra_compiler_flags('-std=c++11');
+                if ( $self->_is_clang ) {
+                    $self->_add_extra_compiler_flags('-stdlib=libc++');
+                }
             }
         }
         if ( $self->_is_msvc ) {
@@ -70,7 +74,6 @@ sub new {
             $self->_add_extra_linker_flags('msvcprt.lib');
         }
     }
-    
 
     # c99 is required
     if ( $args{needs_compiler_c99} ) {
@@ -115,8 +118,8 @@ sub ACTION_code {
     # write xshelper.h
     if ( my $xshelper = $self->xshelper_h_path ) {
         File::Path::mkpath( File::Basename::dirname($xshelper) );
-        
-        if ( open(my $fh, '>', $xshelper) ) {
+
+        if ( open( my $fh, '>', $xshelper ) ) {
             print $fh _xshelper_h();
             close $fh;
         }
@@ -135,10 +138,10 @@ sub ACTION_manifest_skip {
     my $self = shift;
     $self->SUPER::ACTION_manifest_skip(@_);
     if ( -e 'MANIFEST.SKIP' ) {
-        open(my $fh, '<', 'MANIFEST.SKIP') or die $!;
+        open( my $fh, '<', 'MANIFEST.SKIP' ) or die $!;
         my $content = do { local $/; <$fh> };
         close $fh;
-        my $ppport  = $self->ppport_h_path;
+        my $ppport = $self->ppport_h_path;
         if ( $ppport && $content !~ /\Q${ppport}\E/ ) {
 
             my $safe = quotemeta($ppport);
@@ -182,6 +185,31 @@ sub _is_gcc {
 # Microsoft Visual C++ Compiler (cl.exe)
 sub _is_msvc {
     return $Config{cc} =~ /\A cl \b /xmsi;
+}
+
+sub _enable_cpp11 {
+    if ( _is_clang() ) {
+        my $ver = _llvm_version();
+        warn $ver->{major};
+        return ( $ver->{major} >= 3 && $ver->{minor} >= 2 );
+    }
+    elsif ( _is_gcc() ) {
+        my $ver = _gcc_version();
+        my ( $major, $minor ) = $ver =~ /([0-9]+\.([0-9]+))/;
+        return ( $major >= 4 && $minor >= 7 );
+    }
+}
+
+sub _is_clang {
+    my $ver = `$Config{cc} --version`;
+    return $ver =~ /clang\-[0-9]+/ ? 1 : 0;
+}
+
+sub _llvm_version {
+    my $ver = `$Config{cc} --version`;
+    return unless _is_clang();
+    my ( $llvm_majar, $llvm_minor ) = $ver =~ /LLVM\s+([0-9]+)\.([0-9]+)/;
+    return { major => $llvm_majar, minor => $llvm_minor };
 }
 
 sub _gcc_version {
