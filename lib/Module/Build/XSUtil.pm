@@ -60,12 +60,17 @@ sub new {
                 if $Config::Config{ccflags} =~ /-D_FILE_OFFSET_BITS=64/;
             $self->_add_extra_linker_flags('-lgcc_s')
                 if $^O eq 'netbsd' && !grep {/\-lgcc_s/} @{ $self->extra_linker_flags };
+            my $cpp_ver = $args{needs_compiler_cpp};
+            if( $cpp_ver == 11){
+                $self->_add_extra_compiler_flags('-std=c++11');
+            }
         }
         if ( $self->_is_msvc ) {
-            $self->add_extra_compiler_flags('-TP -EHsc');
+            $self->_add_extra_compiler_flags('-TP -EHsc');
             $self->_add_extra_linker_flags('msvcprt.lib');
         }
     }
+    
 
     # c99 is required
     if ( $args{needs_compiler_c99} ) {
