@@ -315,7 +315,7 @@ sub _xshelper_h {
 :/* portability stuff not supported by ppport.h yet */
 :
 :#ifndef STATIC_INLINE /* from 5.13.4 */
-:# if defined(__GNUC__) || defined(__cplusplus) || (defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L))
+:# if defined(__cplusplus) || (defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L))
 :#   define STATIC_INLINE static inline
 :# else
 :#   define STATIC_INLINE static
