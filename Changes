@@ -2,6 +2,10 @@ Revision history for Perl extension Module-Build-XSHelper
 
 {{$NEXT}}
 
+0.15 2015-04-23T22:43:05Z
+    - Update XSHelper for Fix STATIC_INLINE for gcc -std=c89
+        (vpit)
+
 0.14 2014-08-04T09:48:00Z
     - Skip broken test.
 
