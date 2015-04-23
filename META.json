@@ -4,7 +4,7 @@
       ":"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v2.1.1, CPAN::Meta::Converter version 2.142060",
+   "generated_by" : "Minilla/v2.3.0, CPAN::Meta::Converter version 2.142060",
    "license" : [
       "perl_5"
    ],
@@ -42,13 +42,13 @@
       },
       "runtime" : {
          "requires" : {
-            "Devel::CheckCompiler" : "0.02",
-            "Devel::PPPort" : "3.19",
+            "Devel::CheckCompiler" : "0",
+            "Devel::PPPort" : "0",
             "Exporter" : "0",
             "ExtUtils::CBuilder" : "0",
             "File::Basename" : "0",
             "File::Path" : "0",
-            "XSLoader" : "0.02",
+            "XSLoader" : "0",
             "parent" : "0",
             "perl" : "5.008005"
          }
@@ -79,6 +79,7 @@
    "version" : "0.14",
    "x_contributors" : [
       "tokuhirom <tokuhirom@gmail.com>",
+      "Vincent Pit <perl@profvince.com>",
       "hideo55 <hide.o.j55@gmail.com>"
    ]
 }
