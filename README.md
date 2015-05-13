@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/hideo55/Module-Build-XSUtil.svg?branch=master)](https://travis-ci.org/hideo55/Module-Build-XSUtil)
 # NAME
 
 Module::Build::XSUtil - A Module::Build class for building XS modules
