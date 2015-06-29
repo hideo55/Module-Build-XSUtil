@@ -79,6 +79,13 @@ sub new {
     if ( $args{needs_compiler_c99} ) {
         require Devel::CheckCompiler;
         Devel::CheckCompiler::check_c99_or_exit();
+
+        if ( _is_gcc() ) {
+            my $gccversion = _gcc_version();
+            if ( $gccversion < 5 ) {
+                $self->_add_extra_compiler_flags('-std=c99');
+            }
+        }
     }
 
     if ( $args{cc_warnings} ) {
