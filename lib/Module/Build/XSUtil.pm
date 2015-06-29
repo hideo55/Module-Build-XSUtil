@@ -214,7 +214,7 @@ sub _llvm_version {
 
 sub _gcc_version {
     my $res = `$Config{cc} --version`;
-    my ($version) = $res =~ /\(GCC\) ([0-9.]+)/;
+    my ($version) = $res =~ /(?:\(GCC\)|g?cc \([^)]+\)) ([0-9.]+)/;
     no warnings 'numeric', 'uninitialized';
     return sprintf '%g', $version;
 }
