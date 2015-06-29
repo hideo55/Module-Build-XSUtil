@@ -2,6 +2,12 @@ Revision history for Perl extension Module-Build-XSHelper
 
 {{$NEXT}}
 
+0.16 2015-06-29T15:55:13Z
+    - Fix regexp of _gcc_version for Ubuntu and Debian
+        (syohex)
+    - Set -std=c99 explicitly for older GCC
+        (syohex)
+
 0.15 2015-04-23T22:43:05Z
     - Update XSHelper for Fix STATIC_INLINE for gcc -std=c89
         (vpit)

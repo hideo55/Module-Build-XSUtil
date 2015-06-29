@@ -8,7 +8,7 @@ use File::Basename;
 use File::Path;
 our @ISA = qw(Module::Build);
 
-our $VERSION = "0.15";
+our $VERSION = "0.16";
 
 __PACKAGE__->add_property( 'ppport_h_path'   => undef );
 __PACKAGE__->add_property( 'xshelper_h_path' => undef );
