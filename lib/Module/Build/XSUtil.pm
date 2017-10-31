@@ -19,6 +19,7 @@ sub new {
     my %args     = @_;
 
     my $self = $class->SUPER::new(%args);
+    return $self if $self->pureperl_only && $self->allow_pureperl;
 
     if ( !defined $args{cc_warnings} ) {
         $args{cc_warnings} = 1;
