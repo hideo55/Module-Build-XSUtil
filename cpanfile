@@ -1,4 +1,4 @@
-requires 'perl' => '5.008005';
+requires 'perl' => '5.008001';
 requires 'parent' => '0',
 requires 'Exporter' => '0',
 requires 'XSLoader' => 0.02,
