@@ -18,6 +18,6 @@ on 'test' => sub {
     requires 'Capture::Tiny';
     requires 'Cwd::Guard';
     requires 'File::Temp';
-    requires 'File::Copy::Recursive';
+    requires 'File::Copy::Recursive::Reduced', '0.002';
 };
 
